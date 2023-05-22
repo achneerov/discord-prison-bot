@@ -12,4 +12,7 @@ def handle_response(message) -> str:
     if p_message == '!help':
         return "`This is a help message that you can modify.`"
 
-    #  return 'Yeah, I don\'t know. Try typing "!help".'
+    if p_message.startswith('!jail'):
+        return "To move a user to jail, use the command `!jail @user`."
+
+    return 'Yeah, I don\'t know. Try typing "!help".'

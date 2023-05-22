@@ -6,11 +6,23 @@ import credentials
 # Send messages
 async def send_message(message, user_message, is_private):
     try:
-        response = responses.handle_response(user_message)
+        if user_message.startswith('!jail'):
+            mentioned_users = message.mentions
+            if mentioned_users:
+                jail_channel = discord.utils.get(message.guild.channels, name='jail')
+                for user in mentioned_users:
+                    await user.move_to(jail_channel)
+                response = f"Moved {', '.join([user.name for user in mentioned_users])} to the jail channel."
+            else:
+                response = "No user mentioned. Please mention a user using `@`."
+        else:
+            response = responses.handle_response(user_message)
+
         await message.author.send(response) if is_private else await message.channel.send(response)
 
     except Exception as e:
         print(e)
+
 
 
 def run_discord_bot():
