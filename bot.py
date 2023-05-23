@@ -11,14 +11,12 @@ async def send_message(message, user_message, is_private):
             mentioned_users = message.mentions
             if mentioned_users:
                 jail_channel = discord.utils.get(message.guild.channels, name='jail')
-                
                 for i in range(15):
                     for user in mentioned_users:
-                        await user.move_to(jail_channel)
+                        if user.voice and user.voice.channel:
+                            await user.move_to(jail_channel)
                     await asyncio.sleep(1)
-                
-                
-                response = f"Moved {', '.join([user.name for user in mentioned_users])} to the jail channel."
+                response = f" Inmate {', '.join([user.name for user in mentioned_users])} has served his 15 second sentence."
             else:
                 response = "No user mentioned. Please mention a user using `@`."
         else:
@@ -28,8 +26,6 @@ async def send_message(message, user_message, is_private):
 
     except Exception as e:
         print(e)
-
-
 
 def run_discord_bot():
     TOKEN = credentials.discordToken
@@ -61,7 +57,6 @@ def run_discord_bot():
             await send_message(message, user_message, is_private=True)
         else:
             await send_message(message, user_message, is_private=False)
-
 
     # Remember to run your bot with your personal TOKEN
     client.run(TOKEN)

@@ -1,18 +1,12 @@
-import random
+#import random
 
 
 def handle_response(message) -> str:
     p_message = message.lower()
-    if p_message == 'hello':
-        return 'Hey there!'
-
-    if p_message == 'roll':
-        return str(random.randint(1, 6))
 
     if p_message == '!help':
-        return "`This is a help message that you can modify.`"
+        return "`I put people in the jail channel, they cannot leave for 15 seconds. try !jail @user`"
 
     if p_message.startswith('!jail'):
         return "To move a user to jail, use the command `!jail @user`."
 
-    return 'Yeah, I don\'t know. Try typing "!help".'
